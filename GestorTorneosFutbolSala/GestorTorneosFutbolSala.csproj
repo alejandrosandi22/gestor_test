@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E51B080-3D29-4C4B-B470-ADF249950C07}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GestorTorneosFutbolSala</RootNamespace>
+    <AssemblyName>GestorTorneosFutbolSala</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Business\Services\FineService.cs" />
+    <Compile Include="src\Business\Services\IncidentService.cs" />
+    <Compile Include="src\Business\Services\MatchService.cs" />
+    <Compile Include="src\Business\Services\PenaltyService.cs" />
+    <Compile Include="src\Business\Services\PlayerService.cs" />
+    <Compile Include="src\Business\Services\TeamService.cs" />
+    <Compile Include="src\Business\Services\TournamentService.cs" />
+    <Compile Include="src\Business\Services\UserService.cs" />
+    <Compile Include="src\Business\Validators\FineValidator.cs" />
+    <Compile Include="src\Business\Validators\IncidentValidator.cs" />
+    <Compile Include="src\Business\Validators\MatchValidator.cs" />
+    <Compile Include="src\Business\Validators\PenaltyValidator.cs" />
+    <Compile Include="src\Business\Validators\PlayerValidator.cs" />
+    <Compile Include="src\Business\Validators\TeamValidator.cs" />
+    <Compile Include="src\Business\Validators\TournamentValidator.cs" />
+    <Compile Include="src\Business\Validators\UserValidators.cs" />
+    <Compile Include="src\Infrastructure\Repositories\FineRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\IncidentRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\MatchRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\PenaltyRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\PlayerRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\ReportRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\TeamRepository.cs" />
+    <Compile Include="src\Infrastructure\Repositories\TournamentRepository.cs" />
+    <Compile Include="src\Domain\Entities\Fine.cs" />
+    <Compile Include="src\Domain\Entities\Match.cs" />
+    <Compile Include="src\Domain\Entities\Incident.cs" />
+    <Compile Include="src\Domain\Entities\Player.cs" />
+    <Compile Include="src\Domain\Entities\Penalty.cs" />
+    <Compile Include="src\Domain\Entities\Team.cs" />
+    <Compile Include="src\Domain\Entities\User.cs" />
+    <Compile Include="src\Domain\Enums\GenderCategoryEnum.cs" />
+    <Compile Include="src\Domain\Enums\IncidentTypeEnum.cs" />
+    <Compile Include="src\Domain\Enums\UserRoleEnum.cs" />
+    <Compile Include="src\Domain\Entities\Tournament.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Application\Config\EnvironmentLoader.cs" />
+    <Compile Include="src\Infrastructure\Data\DBConnection.cs" />
+    <Compile Include="src\Infrastructure\Repositories\UserRepository.cs" />
+    <Compile Include="src\Presentation\Controllers\FineController.cs" />
+    <Compile Include="src\Presentation\Controllers\IncidentController.cs" />
+    <Compile Include="src\Presentation\Controllers\MatchController.cs" />
+    <Compile Include="src\Presentation\Controllers\PenaltyController.cs" />
+    <Compile Include="src\Presentation\Controllers\PlayerController.cs" />
+    <Compile Include="src\Presentation\Controllers\TeamController.cs" />
+    <Compile Include="src\Presentation\Controllers\TournamentController.cs" />
+    <Compile Include="src\Presentation\Controllers\UserController.cs" />
+    <Compile Include="src\Presentation\Views\DashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\DashboardForm.Designer.cs">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\MatchDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\MatchDetailsForm.Designer.cs">
+      <DependentUpon>MatchDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\MatchesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\MatchesForm.Designer.cs">
+      <DependentUpon>MatchesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\PlayerEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\PlayerEntryForm.Designer.cs">
+      <DependentUpon>PlayerEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\ReportsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\ReportsForm.Designer.cs">
+      <DependentUpon>ReportsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\StatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\StatisticsForm.Designer.cs">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TeamEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TeamEntryForm.Designer.cs">
+      <DependentUpon>TeamEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TeamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TeamsForm.Designer.cs">
+      <DependentUpon>TeamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentDetailsForm.Designer.cs">
+      <DependentUpon>TournamentDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentEntryForm.Designer.cs">
+      <DependentUpon>TournamentEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\TournamentForm.Designer.cs">
+      <DependentUpon>TournamentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\UserEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\UserEntryForm.Designer.cs">
+      <DependentUpon>UserEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Presentation\Views\UsersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Presentation\Views\UsersForm.Designer.cs">
+      <DependentUpon>UsersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="utils\IdGenerator.cs" />
+    <Compile Include="utils\LoadFonts.cs" />
+    <Compile Include="utils\ViewManager.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="src\Presentation\Views\DashboardForm.resx">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\MatchDetailsForm.resx">
+      <DependentUpon>MatchDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\MatchesForm.resx">
+      <DependentUpon>MatchesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\ReportsForm.resx">
+      <DependentUpon>ReportsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\TeamEntryForm.resx">
+      <DependentUpon>TeamEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\TeamsForm.resx">
+      <DependentUpon>TeamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\TournamentDetailsForm.resx">
+      <DependentUpon>TournamentDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\TournamentEntryForm.resx">
+      <DependentUpon>TournamentEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\TournamentForm.resx">
+      <DependentUpon>TournamentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Presentation\Views\UserEntryForm.resx">
+      <DependentUpon>UserEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
