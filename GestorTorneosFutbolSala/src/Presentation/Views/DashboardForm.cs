@@ -51,7 +51,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
         private void SetupForm()
         {
             this.Size = new Size(1151, 689);
-            this.MaximumSize = new Size(1152, 700);
+            this.MaximumSize = new Size(1535, 700);
             this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.White;
 
@@ -136,7 +136,19 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 {
                     AutoScroll = true,
                     Dock = DockStyle.Fill,
-                    BackColor = Color.White
+                    BackColor = Color.White,
+                    Padding = new Padding(10),
+                    AutoSize = false
+                };
+
+                Panel contentWrapper = new Panel
+                {
+                    Width = 900,
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    Location = new Point(0, 0),
+                    MaximumSize = new Size(1000, 0),
+                    BackColor = Color.Transparent
                 };
 
                 Label titleLabel = new Label
@@ -144,17 +156,17 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                     Text = "Estadísticas Generales",
                     Font = loadFonts.SetDefaultFont(20f, FontStyle.Bold),
                     ForeColor = Color.FromArgb(0, 102, 204),
-                    Location = new Point(20, 20),
-                    AutoSize = true
+                    AutoSize = true,
+                    MaximumSize = new Size(1000, 0)
                 };
-                scrollablePanel.Controls.Add(titleLabel);
+                contentWrapper.Controls.Add(titleLabel);
 
                 Panel kpiPanel = new Panel
                 {
-                    Location = new Point(20, 60),
-                    Size = new Size(1100, 200),
+                    Location = new Point(0, titleLabel.Bottom + 20),
+                    Size = new Size(1000, 200),
                     AutoSize = false,
-                    BackColor = Color.White
+                    BackColor = Color.Transparent
                 };
 
                 int totalTournaments = tournamentService.GetAll().Count;
@@ -169,20 +181,24 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
                 int totalGoals = matchService.GetAll().Sum(m => m.HomeGoals + m.AwayGoals);
 
-                CreateKpiControl(kpiPanel, "Total de Torneos", totalTournaments.ToString(), 0, 0);
-                CreateKpiControl(kpiPanel, "Total de Equipos", totalTeams.ToString(), 366, 0);
-                CreateKpiControl(kpiPanel, "Total de Jugadores", $"{totalPlayers} ({avgPlayersPerTeam} promedio por equipo)", 733, 0);
-                CreateKpiControl(kpiPanel, "Partidos Jugados", playedMatches.ToString(), 0, 100);
-                CreateKpiControl(kpiPanel, "Recaudación por Sanciones", $"₡{totalFines:N2}", 366, 100);
-                CreateKpiControl(kpiPanel, "Goles Totales Anotados", totalGoals.ToString(), 733, 100);
+                int kpiWidth = 270;
+                int gap = (900 - (kpiWidth * 3)) / 4;
 
-                scrollablePanel.Controls.Add(kpiPanel);
+                CreateKpiControl(kpiPanel, "Total de Torneos", totalTournaments.ToString(), gap, 0, kpiWidth);
+                CreateKpiControl(kpiPanel, "Total de Equipos", totalTeams.ToString(), gap * 2 + kpiWidth, 0, kpiWidth);
+                CreateKpiControl(kpiPanel, "Total de Jugadores", $"{totalPlayers} ({avgPlayersPerTeam} promedio por equipo)", gap * 3 + kpiWidth * 2, 0, kpiWidth);
+                CreateKpiControl(kpiPanel, "Partidos Jugados", playedMatches.ToString(), gap, 100, kpiWidth);
+                CreateKpiControl(kpiPanel, "Recaudación por Sanciones", $"₡{totalFines:N2}", gap * 2 + kpiWidth, 100, kpiWidth);
+                CreateKpiControl(kpiPanel, "Goles Totales Anotados", totalGoals.ToString(), gap * 3 + kpiWidth * 2, 100, kpiWidth);
+
+                contentWrapper.Controls.Add(kpiPanel);
 
                 Panel tablePanel = new Panel
                 {
-                    Location = new Point(20, 280),
-                    Size = new Size(1100, 300),
-                    BackColor = Color.White
+                    Location = new Point(0, kpiPanel.Bottom + 20),
+                    Width = 900,
+                    AutoSize = true,
+                    BackColor = Color.Transparent
                 };
 
                 Label tableTitle = new Label
@@ -190,8 +206,8 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                     Text = "4 Mejores Equipos Globales (por promedio de puntos)",
                     Font = loadFonts.SetDefaultFont(16f, FontStyle.Bold),
                     ForeColor = Color.FromArgb(0, 102, 204),
-                    Location = new Point(0, 0),
-                    AutoSize = true
+                    AutoSize = true,
+                    MaximumSize = new Size(1000, 0)
                 };
                 tablePanel.Controls.Add(tableTitle);
 
@@ -199,8 +215,9 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
                 DataGridView dgvTeams = new DataGridView
                 {
-                    Location = new Point(0, 40),
-                    Size = new Size(1100, 250),
+                    Location = new Point(0, tableTitle.Bottom + 10),
+                    Width = 900,
+                    Height = 250,
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                     AllowUserToAddRows = false,
                     AllowUserToDeleteRows = false,
@@ -209,7 +226,8 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                     SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                     BorderStyle = BorderStyle.None,
                     AlternatingRowsDefaultCellStyle = { BackColor = Color.FromArgb(245, 245, 245) },
-                    GridColor = Color.FromArgb(230, 230, 230)
+                    GridColor = Color.FromArgb(230, 230, 230),
+                    ScrollBars = ScrollBars.Vertical
                 };
 
                 dgvTeams.Columns.Add("Rank", "#");
@@ -240,8 +258,9 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 }
 
                 tablePanel.Controls.Add(dgvTeams);
-                scrollablePanel.Controls.Add(tablePanel);
+                contentWrapper.Controls.Add(tablePanel);
 
+                scrollablePanel.Controls.Add(contentWrapper);
                 pnlContent.Controls.Add(scrollablePanel);
             }
             catch (Exception ex)
@@ -251,12 +270,12 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             }
         }
 
-        private void CreateKpiControl(Panel parentPanel, string title, string value, int x, int y)
+        private void CreateKpiControl(Panel parentPanel, string title, string value, int x, int y, int width)
         {
             Panel kpiContainer = new Panel
             {
                 Location = new Point(x, y),
-                Size = new Size(350, 80),
+                Size = new Size(width, 80),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
             };
@@ -267,7 +286,8 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 Font = loadFonts.SetDefaultFont(12f, FontStyle.Regular),
                 ForeColor = Color.FromArgb(64, 64, 64),
                 Location = new Point(10, 10),
-                AutoSize = true
+                AutoSize = true,
+                MaximumSize = new Size(width - 20, 0)
             };
 
             Label valueLabel = new Label
@@ -276,7 +296,8 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 Font = loadFonts.SetDefaultFont(18f, FontStyle.Bold),
                 ForeColor = Color.FromArgb(0, 102, 204),
                 Location = new Point(10, 35),
-                AutoSize = true
+                AutoSize = true,
+                MaximumSize = new Size(width - 20, 0)
             };
 
             kpiContainer.Controls.Add(titleLabel);
@@ -308,9 +329,8 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             {
                 if (this.currentUser.Role.Equals(UserRoleEnum.Administrador))
                 {
-                ViewManager.ShowFormInPanel(new UsersForm(), TargetPanel.DASHBOARD);
+                    ViewManager.ShowFormInPanel(new UsersForm(), TargetPanel.DASHBOARD);
                 }
-
                 else
                 {
                     MessageBox.Show("No tiene permisos para acceder a este apartado");

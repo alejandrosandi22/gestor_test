@@ -5,12 +5,8 @@ using GestorTorneosFutbolSala.src.Presentation.Controllers;
 using GestorTorneosFutbolSala.utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GestorTorneosFutbolSala.src.Presentation.Views
@@ -74,6 +70,9 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             txtYear.Font = interFont;
             cmbGender.Font = interFont;
             cmbAgeCategory.Font = interFont;
+            txtYellowCardPrice.Font = interFont;
+            txtRedCardPrice.Font = interFont;
+            txtBlueCardPrice.Font = interFont;
 
             dgvIncidents.Font = interFont;
             dgvFines.Font = interFont;
@@ -123,30 +122,54 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             cmbAgeCategory.Items.AddRange(new string[] { "Adultos", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21" });
 
             if (_tournament.AgeCategory == 0)
+            {
                 cmbAgeCategory.SelectedIndex = 0;
+            }
             else
             {
                 switch (_tournament.AgeCategory)
                 {
-                    case 12: cmbAgeCategory.SelectedIndex = 1; break;
-                    case 14: cmbAgeCategory.SelectedIndex = 2; break;
-                    case 16: cmbAgeCategory.SelectedIndex = 3; break;
-                    case 18: cmbAgeCategory.SelectedIndex = 4; break;
-                    case 21: cmbAgeCategory.SelectedIndex = 5; break;
-                    default: cmbAgeCategory.SelectedIndex = 0; break;
+                    case 12:
+                        cmbAgeCategory.SelectedIndex = 1;
+                        break;
+                    case 14:
+                        cmbAgeCategory.SelectedIndex = 2;
+                        break;
+                    case 16:
+                        cmbAgeCategory.SelectedIndex = 3;
+                        break;
+                    case 18:
+                        cmbAgeCategory.SelectedIndex = 4;
+                        break;
+                    case 21:
+                        cmbAgeCategory.SelectedIndex = 5;
+                        break;
+                    default:
+                        cmbAgeCategory.SelectedIndex = 0;
+                        break;
                 }
             }
         }
 
         private void LoadPenaltyPrices()
         {
-            var yellowCardPenalty = _penalties.FirstOrDefault(p => p.Name.Contains("Amarilla") || p.Name.Contains("Yellow"));
-            var redCardPenalty = _penalties.FirstOrDefault(p => p.Name.Contains("Roja") || p.Name.Contains("Red"));
-            var blueCardPenalty = _penalties.FirstOrDefault(p => p.Name.Contains("Azul") || p.Name.Contains("Blue"));
+            Penalty yellowCardPenalty = null;
+            Penalty redCardPenalty = null;
+            Penalty blueCardPenalty = null;
 
-            txtYellowCardPrice.Text = yellowCardPenalty?.Amount.ToString("0") ?? "5000";
-            txtRedCardPrice.Text = redCardPenalty?.Amount.ToString("0") ?? "15000";
-            txtBlueCardPrice.Text = blueCardPenalty?.Amount.ToString("0") ?? "10000";
+            foreach (Penalty p in _penalties)
+            {
+                if (p.Name.Contains("Amarilla") || p.Name.Contains("Yellow"))
+                    yellowCardPenalty = p;
+                else if (p.Name.Contains("Roja") || p.Name.Contains("Red"))
+                    redCardPenalty = p;
+                else if (p.Name.Contains("Azul") || p.Name.Contains("Blue"))
+                    blueCardPenalty = p;
+            }
+
+            txtYellowCardPrice.Text = yellowCardPenalty != null ? yellowCardPenalty.Amount.ToString("0") : "5000";
+            txtRedCardPrice.Text = redCardPenalty != null ? redCardPenalty.Amount.ToString("0") : "15000";
+            txtBlueCardPrice.Text = blueCardPenalty != null ? blueCardPenalty.Amount.ToString("0") : "10000";
         }
 
         private void SetupIncidentsGrid()
@@ -157,10 +180,11 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             dgvIncidents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvIncidents.MultiSelect = false;
             dgvIncidents.ReadOnly = true;
+            dgvIncidents.ScrollBars = ScrollBars.Vertical;
 
             dgvIncidents.Columns.Clear();
 
-            var matchColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn matchColumn = new DataGridViewTextBoxColumn
             {
                 Name = "MatchId",
                 HeaderText = "ID Partido",
@@ -168,7 +192,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 Width = 100
             };
 
-            var playerColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn playerColumn = new DataGridViewTextBoxColumn
             {
                 Name = "PlayerId",
                 HeaderText = "ID Jugador",
@@ -176,14 +200,14 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 Width = 100
             };
 
-            var typeColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn typeColumn = new DataGridViewTextBoxColumn
             {
                 Name = "TypeText",
                 HeaderText = "Tipo",
                 Width = 120
             };
 
-            var minuteColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn minuteColumn = new DataGridViewTextBoxColumn
             {
                 Name = "Minute",
                 HeaderText = "Minuto",
@@ -195,7 +219,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 }
             };
 
-            var notesColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn notesColumn = new DataGridViewTextBoxColumn
             {
                 Name = "Notes",
                 HeaderText = "Notas",
@@ -203,7 +227,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             };
 
-            var dateColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn dateColumn = new DataGridViewTextBoxColumn
             {
                 Name = "CreatedDate",
                 HeaderText = "Fecha",
@@ -225,10 +249,12 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             dgvFines.AllowUserToDeleteRows = false;
             dgvFines.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvFines.MultiSelect = false;
+            dgvFines.ReadOnly = false;
+            dgvFines.ScrollBars = ScrollBars.Vertical;
 
             dgvFines.Columns.Clear();
 
-            var playerColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn playerColumn = new DataGridViewTextBoxColumn
             {
                 Name = "PlayerId",
                 HeaderText = "ID Jugador",
@@ -237,7 +263,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 ReadOnly = true
             };
 
-            var penaltyColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn penaltyColumn = new DataGridViewTextBoxColumn
             {
                 Name = "PenaltyName",
                 HeaderText = "Penalidad",
@@ -245,7 +271,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 ReadOnly = true
             };
 
-            var dateColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn dateColumn = new DataGridViewTextBoxColumn
             {
                 Name = "Date",
                 HeaderText = "Fecha",
@@ -258,7 +284,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 ReadOnly = true
             };
 
-            var amountColumn = new DataGridViewTextBoxColumn
+            DataGridViewTextBoxColumn amountColumn = new DataGridViewTextBoxColumn
             {
                 Name = "Amount",
                 HeaderText = "Monto (₡)",
@@ -272,7 +298,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 ReadOnly = true
             };
 
-            var paidColumn = new DataGridViewCheckBoxColumn
+            DataGridViewCheckBoxColumn paidColumn = new DataGridViewCheckBoxColumn
             {
                 Name = "Paid",
                 HeaderText = "Pagado",
@@ -285,23 +311,29 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
         private void LoadIncidentsData()
         {
-            var incidentsWithTypeText = _incidents.Select(i => new
-            {
-                Incident = i,
-                TypeText = GetIncidentTypeText(i.Type)
-            }).ToList();
+            var cardTypes = new HashSet<IncidentTypeEnum>
+                {
+                    IncidentTypeEnum.YellowCard,
+                    IncidentTypeEnum.BlueCard,
+                    IncidentTypeEnum.RedCard,
+                    IncidentTypeEnum.Expulsion
+                };
 
             dgvIncidents.Rows.Clear();
 
-            foreach (var item in incidentsWithTypeText)
+            foreach (Incident incident in _incidents)
             {
-                var incident = item.Incident;
+                if (!cardTypes.Contains(incident.Type))
+                    continue;
+
+                string typeText = GetIncidentTypeText(incident.Type);
+
                 int rowIndex = dgvIncidents.Rows.Add();
-                var row = dgvIncidents.Rows[rowIndex];
+                DataGridViewRow row = dgvIncidents.Rows[rowIndex];
 
                 row.Cells["MatchId"].Value = incident.MatchId;
                 row.Cells["PlayerId"].Value = incident.PlayerId;
-                row.Cells["TypeText"].Value = item.TypeText;
+                row.Cells["TypeText"].Value = typeText;
                 row.Cells["Minute"].Value = incident.Minute;
                 row.Cells["Notes"].Value = incident.Notes ?? "";
                 row.Cells["CreatedDate"].Value = incident.CreatedDate;
@@ -311,22 +343,17 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
         private void LoadFinesData()
         {
-            var finesWithPenaltyNames = _fines.Select(f => new
-            {
-                Fine = f,
-                PenaltyName = GetPenaltyName(f.PenaltyId)
-            }).ToList();
-
             dgvFines.Rows.Clear();
 
-            foreach (var item in finesWithPenaltyNames)
+            foreach (Fine fine in _fines)
             {
-                var fine = item.Fine;
+                string penaltyName = GetPenaltyName(fine.PenaltyId);
+
                 int rowIndex = dgvFines.Rows.Add();
-                var row = dgvFines.Rows[rowIndex];
+                DataGridViewRow row = dgvFines.Rows[rowIndex];
 
                 row.Cells["PlayerId"].Value = fine.PlayerId;
-                row.Cells["PenaltyName"].Value = item.PenaltyName;
+                row.Cells["PenaltyName"].Value = penaltyName;
                 row.Cells["Date"].Value = fine.Date;
                 row.Cells["Amount"].Value = fine.Amount;
                 row.Cells["Paid"].Value = fine.Paid;
@@ -359,8 +386,12 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
         private string GetPenaltyName(int penaltyId)
         {
-            var penalty = _penalties.FirstOrDefault(p => p.Id == penaltyId);
-            return penalty?.Name ?? "Penalidad desconocida";
+            foreach (Penalty p in _penalties)
+            {
+                if (p.Id == penaltyId)
+                    return p.Name;
+            }
+            return "Penalidad desconocida";
         }
 
         private void btnSaveTournament_Click(object sender, EventArgs e)
@@ -376,13 +407,27 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                     int selectedAge = cmbAgeCategory.SelectedIndex;
                     switch (selectedAge)
                     {
-                        case 0: _tournament.AgeCategory = 0; break;
-                        case 1: _tournament.AgeCategory = 12; break;
-                        case 2: _tournament.AgeCategory = 14; break;
-                        case 3: _tournament.AgeCategory = 16; break;
-                        case 4: _tournament.AgeCategory = 18; break;
-                        case 5: _tournament.AgeCategory = 21; break;
-                        default: _tournament.AgeCategory = 0; break;
+                        case 0:
+                            _tournament.AgeCategory = 0;
+                            break;
+                        case 1:
+                            _tournament.AgeCategory = 12;
+                            break;
+                        case 2:
+                            _tournament.AgeCategory = 14;
+                            break;
+                        case 3:
+                            _tournament.AgeCategory = 16;
+                            break;
+                        case 4:
+                            _tournament.AgeCategory = 18;
+                            break;
+                        case 5:
+                            _tournament.AgeCategory = 21;
+                            break;
+                        default:
+                            _tournament.AgeCategory = 0;
+                            break;
                     }
 
                     _tournamentController.UpdateTournament(_tournament);
@@ -443,24 +488,24 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
                 if (decimal.TryParse(txtYellowCardPrice.Text, out decimal yellowPrice))
                 {
-                    hasChanges |= UpdatePenaltyPrice("Amarilla", "Yellow", yellowPrice);
+                    hasChanges = UpdatePenaltyPrice("Amarilla", "Yellow", yellowPrice) || hasChanges;
                 }
 
                 if (decimal.TryParse(txtRedCardPrice.Text, out decimal redPrice))
                 {
-                    hasChanges |= UpdatePenaltyPrice("Roja", "Red", redPrice);
+                    hasChanges = UpdatePenaltyPrice("Roja", "Red", redPrice) || hasChanges;
                 }
 
                 if (decimal.TryParse(txtBlueCardPrice.Text, out decimal bluePrice))
                 {
-                    hasChanges |= UpdatePenaltyPrice("Azul", "Blue", bluePrice);
+                    hasChanges = UpdatePenaltyPrice("Azul", "Blue", bluePrice) || hasChanges;
                 }
 
                 foreach (DataGridViewRow row in dgvFines.Rows)
                 {
                     if (row.IsNewRow) continue;
 
-                    var fine = (Fine)row.Tag;
+                    Fine fine = (Fine)row.Tag;
                     bool paid = Convert.ToBoolean(row.Cells["Paid"].Value ?? false);
 
                     if (fine.Paid != paid)
@@ -494,12 +539,18 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
         private bool UpdatePenaltyPrice(string nameEs, string nameEn, decimal newPrice)
         {
-            var penalty = _penalties.FirstOrDefault(p => p.Name.Contains(nameEs) || p.Name.Contains(nameEn));
-            if (penalty != null && penalty.Amount != newPrice)
+            foreach (Penalty p in _penalties)
             {
-                penalty.Amount = newPrice;
-                _penaltyController.UpdatePenalty(penalty);
-                return true;
+                if (p.Name.Contains(nameEs) || p.Name.Contains(nameEn))
+                {
+                    if (p.Amount != newPrice)
+                    {
+                        p.Amount = newPrice;
+                        _penaltyController.UpdatePenalty(p);
+                        return true;
+                    }
+                    return false;
+                }
             }
             return false;
         }

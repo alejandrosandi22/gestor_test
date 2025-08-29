@@ -183,6 +183,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHeader);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximumSize = new System.Drawing.Size(1535, 900);
             this.Name = "DashboardForm";
             this.Text = "Dashboard";
             this.pnlHeader.ResumeLayout(false);
@@ -190,7 +191,6 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.userSessionMenu.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
     }
 }
