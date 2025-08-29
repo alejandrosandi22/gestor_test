@@ -19,13 +19,9 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
         public TournamentDetailsForm(Tournament tournament)
         {
             InitializeComponent();
-            ViewManager.RegisterTournamentPanels(this.pnlContent);
-
-            lblTournamentName.Text = tournament.Name;
             _tournament = tournament;
-
-            SetSelectedButton(btnTeams);
-            ViewManager.ShowFormInPanel(new TeamsForm(_tournament), TargetPanel.TOURNAMENT);
+            lblTournamentName.Text = tournament.Name;
+            ViewManager.RegisterTournamentPanels(this.pnlContent);
         }
 
         private void btnTeams_Click(object sender, EventArgs e)
@@ -69,6 +65,12 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
         {
             SetSelectedButton(btnSettings);
             ViewManager.ShowFormInPanel(new SettingsForm(_tournament), TargetPanel.TOURNAMENT);
+        }
+
+        private void TournamentDetailsForm_Load(object sender, EventArgs e)
+        {
+            SetSelectedButton(btnTeams);
+            ViewManager.ShowFormInPanel(new TeamsForm(_tournament), TargetPanel.TOURNAMENT);
         }
     }
 }

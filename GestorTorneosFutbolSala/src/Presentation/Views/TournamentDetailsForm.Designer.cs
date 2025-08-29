@@ -142,6 +142,7 @@
             this.Controls.Add(this.pnlSidebar);
             this.Name = "TournamentDetailsForm";
             this.Text = "TournamentDetailsForm";
+            this.Load += new System.EventHandler(this.TournamentDetailsForm_Load);
             this.pnlSidebar.ResumeLayout(false);
             this.pnlSidebar.PerformLayout();
             this.ResumeLayout(false);
