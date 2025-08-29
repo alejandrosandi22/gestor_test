@@ -181,12 +181,12 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
 
                 int totalGoals = matchService.GetAll().Sum(m => m.HomeGoals + m.AwayGoals);
 
-                int kpiWidth = 270;
+                int kpiWidth = 280;
                 int gap = (900 - (kpiWidth * 3)) / 4;
 
                 CreateKpiControl(kpiPanel, "Total de Torneos", totalTournaments.ToString(), gap, 0, kpiWidth);
                 CreateKpiControl(kpiPanel, "Total de Equipos", totalTeams.ToString(), gap * 2 + kpiWidth, 0, kpiWidth);
-                CreateKpiControl(kpiPanel, "Total de Jugadores", $"{totalPlayers} ({avgPlayersPerTeam} promedio por equipo)", gap * 3 + kpiWidth * 2, 0, kpiWidth);
+                CreateKpiControl(kpiPanel, "Total de Jugadores", $"{totalPlayers}", gap * 3 + kpiWidth * 2, 0, kpiWidth);
                 CreateKpiControl(kpiPanel, "Partidos Jugados", playedMatches.ToString(), gap, 100, kpiWidth);
                 CreateKpiControl(kpiPanel, "Recaudación por Sanciones", $"₡{totalFines:N2}", gap * 2 + kpiWidth, 100, kpiWidth);
                 CreateKpiControl(kpiPanel, "Goles Totales Anotados", totalGoals.ToString(), gap * 3 + kpiWidth * 2, 100, kpiWidth);
@@ -196,7 +196,7 @@ namespace GestorTorneosFutbolSala.src.Presentation.Views
                 Panel tablePanel = new Panel
                 {
                     Location = new Point(0, kpiPanel.Bottom + 20),
-                    Width = 900,
+                    Width = 1000,
                     AutoSize = true,
                     BackColor = Color.Transparent
                 };
